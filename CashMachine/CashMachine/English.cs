@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace CashMachine
 {
-    class Program
+    class English
     {
-        static void Main(string[] args)
-        {
-            Menu.MenuHandler();
-        }
     }
 }

@@ -10,7 +10,8 @@ namespace CashMachine
     {
         static void Main(string[] args)
         {
-            Menu.MenuHandler();
+            Menu m = new Menu();
+            m.MenuHandler();
         }
     }
 }

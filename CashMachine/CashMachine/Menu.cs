@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CashMachine
 {
@@ -13,26 +9,24 @@ namespace CashMachine
         #endregion
         public Menu() { }
         public void MenuHandler()
-        {           
+        {
             Console.WriteLine("Welcome! / willkommen! / Witaj!");
             Console.WriteLine("Please choose a language / Bitte wählen Sie eine Sprache / Proszę wybrać język");
             Console.Write(" 1 - English /");
             Console.Write(" 2 - Deutsch /");
             Console.Write(" 3 - Polski /");
-           int l = (Convert.ToInt32(Console.ReadLine()));
+            int l = (Convert.ToInt32(Console.ReadLine()));
             switch (l)
             {
                 case 1:
                     EnglishObj.MenuE();
                     break;
                 case 2:
-
                     break;
                 case 3:
-
                     break;
             }
         }
-        
+
     }
 }

@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 
 namespace CashMachine
 {
+    public class DisposableStandard : IDisposable
+    {
+        #region IDisposable
+        public void Dispose()
+        {
+
+        }
+        #endregion
+    }
     public class English
     {
         public List<string> Name = new List<string>();
@@ -65,17 +75,41 @@ namespace CashMachine
                 }
                 finally
                 {
-
+                        /*reader.Close();*/
                 }
             }
         }
         public void WriteCSV()
         {
-            using (FileStream fs = new FileStream(_dataBasePath, FileMode.Append, FileAccess.Write))
+            /*StringBuilder csv = new StringBuilder();
+            csv.Append($"{Name},{Surname},{Login},{Password},{Money}");
+            csv.AppendLine();*/
+            using (FileStream fs = new FileStream(_dataBasePath, FileMode.Open, FileAccess.Write))
             {
-                using (StreamWriter sw = new StreamWriter(fs))
+                try
                 {
+                    using (StreamWriter sw = new StreamWriter(@_dataBasePath, false))
+                    {
+                        try
+                        {
+                            sw.WriteLine($"{Name},{Surname},{Login},{Password},{Money}");
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new AggregateException("Program has stuck upon an unexpected problem:", ex);
+                        }
+                        finally
+                        {
+                            if (sw != null)
+                                sw.Dispose();
+                        }
+                    }
                 }
+                catch
+                {
+
+                }
+
             }
         }
         private void PersonName()
@@ -117,11 +151,32 @@ namespace CashMachine
                 if (flag == 1)
                     break;
             }
+            Console.WriteLine("Password:");
             int flagP = 0, processedP = 0;
             while (true)
             {
-                Console.WriteLine("Password:");
-                string P = Console.ReadLine();
+                string pass = "";
+                do
+                {
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+                    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                    {
+                        pass += key.KeyChar;
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                        {
+                            pass = pass.Substring(0, (pass.Length - 1));
+                            Console.Write("\b \b");
+                        }
+                        else if (key.Key == ConsoleKey.Enter)
+                        {
+                            break;
+                        }
+                    }
+                } while (true);
                 processedP++;
                 foreach (var password in Password)
                 {
@@ -131,7 +186,7 @@ namespace CashMachine
                         //await Task.Delay(30000);
                         Thread.Sleep(30000);
                     }
-                    if (password == P)
+                    if (password == pass)
                     {
                         flagP = 1;
                     }
@@ -163,7 +218,7 @@ namespace CashMachine
                 switch (k)
                 {
                     case 1:
-                        MoneyAmmount();
+                        MoneyAmmount(); 
                         break;
                     case 2:
                         PayIn();
@@ -183,7 +238,12 @@ namespace CashMachine
         }
         void Withdraw()
         {
-
+            WriteCSV();
+            Console.WriteLine($"You got {Money[FlagLN]}");
+            Console.WriteLine("How much you want to withdraw?");
+            int W = (Convert.ToInt32(Console.ReadLine()));
+            var CsvUpdate = string.Join(",", Money);
+            
         }
         void PayIn()
         {
@@ -198,8 +258,6 @@ namespace CashMachine
 
         }
     }
-
-
 }
 
 

@@ -6,6 +6,10 @@ Base requirements for this project are user shells implementation which are:
 IN final product there will be MYSQL database connection.
 For now the project is 60% complete.
 ****************
+User shell BPMN
+****************
+![UserShellBPMN](https://github.com/mchmielczyk/accounting_app/blob/master/bcos-usershell.png)
+****************
 Changelog (Developed only by me)
 ****************
 

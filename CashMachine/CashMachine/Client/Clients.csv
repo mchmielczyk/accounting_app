@@ -1,3 +1,4 @@
-Name;Surname;Login;Password;Money
-John;Doe;Jodo555;!QAZ2wsx;1000
-Jane;Doe;Jado666;!QAZ2wsx;1000
+ID;Name;Surname;Login;Password;Money
+1;John;Doe;Jodo555;!QAZ2wsx;1000
+2;Jane;Doe;Jado666;@WSXzaq1;1001
+3;Dane;Joe:Dajo777;#EDCxsw2;1002

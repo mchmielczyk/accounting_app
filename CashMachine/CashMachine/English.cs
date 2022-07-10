@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace CashMachine
 {
+    #region IDisposable
     public class DisposableStandard : IDisposable
     {
         #region IDisposable
@@ -15,103 +16,21 @@ namespace CashMachine
         }
         #endregion
     }
+    #endregion
+    #region Składowe
+    /*public CSVReader CSVReaderObj = new CSVReader(this);*/
+    #endregion
     public class English
     {
+        public List<int> ID = new List<int>();
         public List<string> Name = new List<string>();
         public List<string> Surname = new List<string>();
         public List<string> Login = new List<string>();
         public List<string> Password = new List<string>();
         public List<string> Money = new List<string>();
-        static private readonly string _WorkingDirectory = Environment.CurrentDirectory;
-        private readonly string _dataBasePath = Directory.GetParent(_WorkingDirectory).Parent.FullName + @"\Client\Clients.csv";
-        private int FlagLN = 0;
-        public void ReadCSV()
-        {
-            using (var reader = new StreamReader($"{_dataBasePath}"))
-            {
-                try
-                {
-                    int flagCN = 0;
-                    while (!reader.EndOfStream)
-                    {
-                        FlagLN = flagCN;
-                        var line = reader.ReadLine();
-                        var values = line.Split(';');
-                        try
-                        {
-                            Name.Add(values[0]);
-                        }
-                        catch (Exception) { }
-                        try
-                        {
-                            Surname.Add(values[1]);
-                        }
-                        catch (Exception) { }
-                        try
-                        {
-                            Login.Add(values[2]);
-                        }
-                        catch (Exception) { }
-                        try
-                        {
-                            Password.Add(values[3]);
-                        }
-                        catch (Exception) { }
-                        try
-                        {
-                            Money.Add(values[4]);
-                        }
-                        catch (Exception) { }
-                        flagCN++;
-                    }
-                    reader.Close();
-                }
-                catch (Exception e)
-                {
-                    // Log.Save(e.Message);
-
-                    // Any form of non internet or connection to database security. 
-                    Console.WriteLine(e.Message);
-                }
-                finally
-                {
-                        /*reader.Close();*/
-                }
-            }
-        }
-        public void WriteCSV()
-        {
-            /*StringBuilder csv = new StringBuilder();
-            csv.Append($"{Name},{Surname},{Login},{Password},{Money}");
-            csv.AppendLine();*/
-            using (FileStream fs = new FileStream(_dataBasePath, FileMode.Open, FileAccess.Write))
-            {
-                try
-                {
-                    using (StreamWriter sw = new StreamWriter(@_dataBasePath, false))
-                    {
-                        try
-                        {
-                            sw.WriteLine($"{Name},{Surname},{Login},{Password},{Money}");
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new AggregateException("Program has stuck upon an unexpected problem:", ex);
-                        }
-                        finally
-                        {
-                            if (sw != null)
-                                sw.Dispose();
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
-
-            }
-        }
+        static public readonly string _WorkingDirectory = Environment.CurrentDirectory;
+        public readonly string _dataBasePath = Directory.GetParent(_WorkingDirectory).Parent.FullName + @"\Client\Clients.csv";
+        public int FlagLN = 0;
         private void PersonName()
         {
             Console.WriteLine($"Hello {Name[FlagLN]} {Surname[FlagLN]}");
@@ -127,12 +46,14 @@ namespace CashMachine
         public void SystemLogger()
         {
             int flag = 0, processed = 0;
-            ReadCSV();
+
+            CSVReader dataRead = new CSVReader(this);
+            dataRead.Read(this);
             while (true)
             {
+                processed++;
                 Console.WriteLine("Login:");
                 string L = Console.ReadLine();
-                processed++;
                 foreach (var login in Login)
                 {
                     if (processed == 3)
@@ -195,7 +116,11 @@ namespace CashMachine
                 if (flagP == 0)
                     Console.WriteLine("Password is incorrect");
                 if (flagP == 1)
-                    break;
+                { 
+                    int[] Id = ID.ToArray();
+                FlagLN = Id[0];
+                break;
+                }
             }
         }
         public void Moneyammount()
@@ -238,24 +163,26 @@ namespace CashMachine
         }
         void Withdraw()
         {
-            WriteCSV();
+            //placeholder
+            /*CSVWriter cSVWriter = new CSVWriter(this);
+            cSVWriter.Writer(this);
             Console.WriteLine($"You got {Money[FlagLN]}");
             Console.WriteLine("How much you want to withdraw?");
             int W = (Convert.ToInt32(Console.ReadLine()));
-            var CsvUpdate = string.Join(",", Money);
-            
+            var CsvUpdate = string.Join(",", Money);*/
+
         }
         void PayIn()
         {
-
+            //placeholder
         }
         void Transfer()
         {
-
+            //placeholder
         }
         void MoneyAmmount()
         {
-
+            //placeholder
         }
     }
 }

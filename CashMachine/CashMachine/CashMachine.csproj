@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CashMachine</RootNamespace>
     <AssemblyName>CashMachine</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDATAWriter.cs" />
+    <Compile Include="IDATAReader.cs" />
+    <Compile Include="DATAReader.cs" />
+    <Compile Include="MYSQLReader.cs" />
+    <Compile Include="CSVReader.cs" />
+    <Compile Include="CSVWriter.cs" />
     <Compile Include="English.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />

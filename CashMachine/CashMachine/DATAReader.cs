@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CashMachine
 {
-
     /// <summary>
     /// Checks person data to aprove ownership of the account.
     /// </summary>

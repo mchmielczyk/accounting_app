@@ -17,7 +17,7 @@ namespace CashMachine
         #endregion
     }
     #endregion
-    #region Składowe
+    #region Components
     /*public CSVReader CSVReaderObj = new CSVReader(this);*/
     #endregion
     public class English
@@ -30,19 +30,16 @@ namespace CashMachine
         public List<string> Money = new List<string>();
         static public readonly string _WorkingDirectory = Environment.CurrentDirectory;
         public readonly string _dataBasePath = Directory.GetParent(_WorkingDirectory).Parent.FullName + @"\Client\Clients.csv";
-        public int FlagLN = 0;
+        public int FlagId = 0;
         private void PersonName()
         {
-            Console.WriteLine($"Hello {Name[FlagLN]} {Surname[FlagLN]}");
+            Console.WriteLine($"Hello {Name[FlagId]} {Surname[FlagId]}");
         }
         public void MenuE()
         {
             SystemLogger();
             MenuPicker();
         }
-        /// <summary>
-        /// Checks person data to aprove ownership of the account.
-        /// </summary>
         public void SystemLogger()
         {
             int flag = 0, processed = 0;
@@ -72,7 +69,7 @@ namespace CashMachine
                 if (flag == 1)
                     break;
             }
-            Console.WriteLine("Password:");
+            Console.WriteLine("Password: \n");
             int flagP = 0, processedP = 0;
             while (true)
             {
@@ -116,16 +113,16 @@ namespace CashMachine
                 if (flagP == 0)
                     Console.WriteLine("Password is incorrect");
                 if (flagP == 1)
-                { 
+                {
                     int[] Id = ID.ToArray();
-                FlagLN = Id[0];
-                break;
+                    FlagId = Id[0];
+                    break;
                 }
             }
         }
         public void Moneyammount()
         {
-            Console.WriteLine($"Your current amount of money is {Money[FlagLN]}");
+            Console.WriteLine($"Your current amount of money is {Money[FlagId]}");
         }
         public void MenuPicker()
         {
@@ -143,7 +140,7 @@ namespace CashMachine
                 switch (k)
                 {
                     case 1:
-                        MoneyAmmount(); 
+                        MoneyAmmount();
                         break;
                     case 2:
                         PayIn();
@@ -163,15 +160,37 @@ namespace CashMachine
         }
         void Withdraw()
         {
-            //placeholder
-            /*CSVWriter cSVWriter = new CSVWriter(this);
-            cSVWriter.Writer(this);
-            Console.WriteLine($"You got {Money[FlagLN]}");
-            Console.WriteLine("How much you want to withdraw?");
-            int W = (Convert.ToInt32(Console.ReadLine()));
-            var CsvUpdate = string.Join(",", Money);*/
-
+            while (true)
+            {
+                int Balance = Int32.Parse(Money[FlagId]);
+                int TmpAmount;
+                CSVWriter cSVWriter = new CSVWriter(this);
+                Console.WriteLine($"You got {Money[FlagId]}");
+                Console.WriteLine("How much you want to withdraw?");
+                while (true)
+                {
+                    string WithdrawAmount = Console.ReadLine();
+                    bool Isnumber = Int32.TryParse(WithdrawAmount, out TmpAmount);
+                    if (Isnumber == true && TmpAmount >= 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input is incorrect, please try again");
+                    }
+                }
+                if (TmpAmount < Balance && TmpAmount >= 0)
+                {
+                    int NewMoney = Balance - TmpAmount;
+                    String Newmoney = NewMoney.ToString();
+                    Money[FlagId] = Newmoney;
+                    cSVWriter.Writer(this);
+                    Console.WriteLine($"Your new account balance is {Money[FlagId]}");
+                }
+            }
         }
+
         void PayIn()
         {
             //placeholder

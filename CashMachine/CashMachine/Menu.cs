@@ -2,9 +2,12 @@
 
 namespace CashMachine
 {
+    /// <summary>
+    /// Menu between different languages.
+    /// </summary>
     public class Menu
     {
-        #region Składowe
+        #region Components
         public English EnglishObj = new English();
         #endregion
         public Menu() { }

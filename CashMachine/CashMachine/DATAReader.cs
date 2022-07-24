@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CashMachine
 {
-    public class DATAReader 
+    /// <summary>
+    /// Checks person data to aprove ownership of the account.
+    /// </summary>
+    public class DATAReader
     {
         private English _english;
         private IDATAReader _idatareader;
@@ -14,12 +17,12 @@ namespace CashMachine
         {
             this._idatareader = DataReader;
         }
-    
-    public DATAReader(English english, IDATAReader DataReader)
-    {
-        _english = english;
+
+        public DATAReader(English english, IDATAReader DataReader)
+        {
+            _english = english;
             _idatareader = DataReader;
-    }
+        }
         public void Read()
         {
             _idatareader.Read(_english);

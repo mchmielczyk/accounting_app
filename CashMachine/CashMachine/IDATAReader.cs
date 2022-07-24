@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CashMachine
 {
+    /// <summary>
+    /// Interface between reading data methods from different data sources. 
+    /// </summary>
     public interface IDATAReader
     {
         void Read(English english);

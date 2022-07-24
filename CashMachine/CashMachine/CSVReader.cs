@@ -6,7 +6,11 @@ using System.Threading;
 
 namespace CashMachine
 {
-    public class CSVReader: IDATAReader
+
+    /// <summary>
+    /// Checks person data from a CSV file.
+    /// </summary>
+    public class CSVReader : IDATAReader
     {
         private English _english;
 
@@ -55,7 +59,7 @@ namespace CashMachine
                         }
                         catch (Exception) { }
                     }
-                    reader.Close();
+                    /*reader.Close();*/
                 }
                 catch (Exception e)
                 {
@@ -66,7 +70,7 @@ namespace CashMachine
                 }
                 finally
                 {
-                    /*reader.Close();*/
+                    reader.Close();
                 }
             }
         }
